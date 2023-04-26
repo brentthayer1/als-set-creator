@@ -5,6 +5,7 @@ from typing import Dict, Literal, Optional, Tuple, Union, overload
 import gzip
 
 from utils import *
+from ableton_track import *
 
 # root = et.fromstring(
 #     command_request
@@ -17,52 +18,29 @@ from utils import *
 # et.tostring(root)
 
 
-class AbletonTrack(object):
-    def __init__(self, track_root: ET.Element):
-        self.track_root = track_root
-        self.track_type = self.get_track_type()
-        self.track_id = self.get_track_id()
-        self.track_group_id = self.get_track_group_id()
-        self.set_name()
-
-    def get_track_type(self):
-        track_type = self.track_root.tag
-        return track_type
-
-    def get_track_id(self):
-        return self.track_root.get("Id")
-
-    def get_track_group_id(self):
-        return get_element(self.track_root, "TrackGroupId", attribute="Value")
-
-    def set_name(self, value=None):
-        if not value:
-            self.name = get_element(self.track_root, "Name.UserName", attribute="Value")
-            if not self.name:
-                self.name = get_element(
-                    self.track_root, "Name.EffectiveName", attribute="Value"
-                )
-        else:
-            self.root = set_element(
-                self.track_root, "Name.UserName", attribute="Value", value=value
-            )
-            self.root = set_element(
-                self.track_root, "Name.EffectiveName", attribute="Value", value=value
-            )
-            self.name = get_element(self.track_root, "Name.UserName", attribute="Value")
-
-
 class AbletonSet:
     def __init__(self, xml_data):
         self.root = ET.fromstring(xml_data)
         self.tracks = self.get_tracks()
         self.master_track = self.get_master_track()
 
+    def get_track_type(self, track):
+        track_type = track.tag
+        if track_type == "MidiTrack":
+            return MidiTrack(track)
+        elif track_type == "AudioTrack":
+            return AudioTrack(track)
+        elif track_type == "GroupTrack":
+            return GroupTrack(track)
+        else:
+            return Track(track)
+
     def get_tracks(self):
         tracks = get_element(self.root, "LiveSet.Tracks")
         track_list = []
         for track in tracks:
-            track_list.append(AbletonTrack(track))
+            track_type = self.get_track_type(track)
+            track_list.append(track_type)
 
         track_dict = {}
         for track in track_list:
