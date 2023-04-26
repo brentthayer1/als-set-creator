@@ -1,88 +1,91 @@
 from xml.etree import ElementTree as ET
 from typing import Dict, Literal, Optional, Tuple, Union, overload
 
-from ableton_track import AbletonTrack
+# from ableton_track import AbletonTrack
 import gzip
 
+from utils import *
 
-@overload
-def get_element(
-    root: ET.Element,
-    attribute_path: str,
-    *,
-    silent_error: Literal[False],
-    attribute: Literal[None] = None,
-):
-    ...
-
-
-@overload
-def get_element(
-    root: ET.Element,
-    attribute_path: str,
-    *,
-    silent_error: Literal[True],
-    attribute: Literal[None] = None,
-):
-    ...
+# root = et.fromstring(
+#     command_request
+# )  # fromString parses xml from string to an element, command request can be xml request string
+# root.find(
+#     "cat"
+# ).text = (
+#     "dog"  # find the element tag as cat and replace it with the string to be replaced.
+# )
+# et.tostring(root)
 
 
-@overload
-def get_element(
-    root: ET.Element,
-    attribute_path: str,
-    *,
-    silent_error: Literal[False] = False,
-    attribute: str,
-):
-    ...
+class AbletonTrack(object):
+    def __init__(self, track_root: ET.Element, version: Tuple[int, int, int]):
+        self.track_root = track_root
+        self.set_name()
+        # self.id = track_root.get("Id")
+        # self.group_id = get_element(track_root, "TrackGroupId", attribute="Value")
+
+    def set_name(self, value=None):
+        if not value:
+            self.name = get_element(self.track_root, "Name.UserName", attribute="Value")
+            if not self.name:
+                self.name = get_element(
+                    self.track_root, "Name.EffectiveName", attribute="Value"
+                )
+        else:
+            self.root = set_element(
+                self.track_root, "Name.UserName", attribute="Value", value=value
+            )
+            self.root = set_element(
+                self.track_root, "Name.EffectiveName", attribute="Value", value=value
+            )
+            self.name = get_element(self.track_root, "Name.UserName", attribute="Value")
 
 
-def get_element(
-    root: ET.Element,
-    attribute_path: str,
-    *,
-    silent_error: bool = False,
-    attribute: Optional[str] = None,
-):
-    """Get element using Element tree xpath syntax."""
-    element = root.findall(f"./{'/'.join(attribute_path.split('.'))}")
-    if not element:
-        if silent_error:
-            return None
-        # ElementTree.dump(root)
-        raise  # ElementNotFound(f"{R}No element for path [{attribute_path}]")
-    if attribute:
-        attr = element[0].get(attribute)
-        if attr is None:
-            raise  # ElementNotFound(f"{R}Element {attribute}is empty!")
-        return attr
-    return element[0]
+class AbletonSet:
+    def __init__(self, xml_data):
+        self.root = ET.fromstring(xml_data)
+        self.tracks = self.load_tracks()
+
+    def load_tracks(self):
+        tracks = get_element(self.root, "LiveSet.Tracks")
+        track_list = []
+        for track in tracks:
+            track_list.append(AbletonTrack(track, (11, 2, 11)))
+
+        return track_list
+
+    def compile_xml(self):
+        header = '<?xml version="1.0" encoding="UTF-8"?>\n'.encode("utf-8")
+        footer = "\n".encode("utf-8")
+        body = ET.tostring(self.root, encoding="utf-8")
+        return header + body + footer
 
 
-root = None
+if __name__ == "__main__":
+    root = None
+
+    path = "/Users/brentthayer/Desktop/set_creator Project/set_creator.als"
+    path2 = "/Users/brentthayer/Desktop/set_creator Project/set_creatorTESTER.als"
+
+    xml_data = als_to_xml(path)
+
+    ableton_set = AbletonSet(xml_data)
+
+    counter = 0
+
+    for track in ableton_set.tracks:
+        print(track.name)
+        track.set_name(f"TEST TRACK {counter}")
+        counter += 1
+
+    xml_output = ableton_set.compile_xml()
+
+    xml_to_als(xml_output, path2)
 
 
-def load_tracks(path):
-    with gzip.open(path, "r") as f:
-        data = f.read().decode("utf-8")
-        if not data:
-            print("%sError loading data %s!")
-            return False
-        root = ET.fromstring(data)
-    tracks = get_element(root, "LiveSet.Tracks")
-    track_list = []
-    for track in tracks:
-        track_list.append(AbletonTrack(track, (11, 2, 11)))
+# print(lst[0].type)
+# print(lst[0].name)
+# print(lst[0].id)
+# print(lst[0].group_id)
 
-    return track_list
-
-
-path = "/Users/brentthayer/Desktop/set_creator Project/set_creator.als"
-lst = load_tracks(path)
-
-
-print(lst[0].type)
-print(lst[0].name)
-print(lst[0].id)
-print(lst[0].group_id)
+# print(dir(lst[0]))
