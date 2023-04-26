@@ -5,7 +5,7 @@
             "Key":"C",
             "BPM":120,
             "TimeSignature":"4/4",
-            "Path":"path/to/song/song1.mp3",
+            "Path":"path/to/song/song1/",
             "Routings":[
                 {
                     "Send": "Bass",

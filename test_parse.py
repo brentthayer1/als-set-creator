@@ -18,11 +18,22 @@ from utils import *
 
 
 class AbletonTrack(object):
-    def __init__(self, track_root: ET.Element, version: Tuple[int, int, int]):
+    def __init__(self, track_root: ET.Element):
         self.track_root = track_root
+        self.track_type = self.get_track_type()
+        self.track_id = self.get_track_id()
+        self.track_group_id = self.get_track_group_id()
         self.set_name()
-        # self.id = track_root.get("Id")
-        # self.group_id = get_element(track_root, "TrackGroupId", attribute="Value")
+
+    def get_track_type(self):
+        track_type = self.track_root.tag
+        return track_type
+
+    def get_track_id(self):
+        return self.track_root.get("Id")
+
+    def get_track_group_id(self):
+        return get_element(self.track_root, "TrackGroupId", attribute="Value")
 
     def set_name(self, value=None):
         if not value:
@@ -44,15 +55,27 @@ class AbletonTrack(object):
 class AbletonSet:
     def __init__(self, xml_data):
         self.root = ET.fromstring(xml_data)
-        self.tracks = self.load_tracks()
+        self.tracks = self.get_tracks()
+        self.master_track = self.get_master_track()
 
-    def load_tracks(self):
+    def get_tracks(self):
         tracks = get_element(self.root, "LiveSet.Tracks")
         track_list = []
         for track in tracks:
-            track_list.append(AbletonTrack(track, (11, 2, 11)))
+            track_list.append(AbletonTrack(track))
 
-        return track_list
+        track_dict = {}
+        for track in track_list:
+            if track.track_type not in track_dict:
+                track_dict[track.track_type] = [track]
+            else:
+                track_dict[track.track_type].append(track)
+
+        return track_dict
+
+    def get_master_track(self):
+        master_track = get_element(self.root, "LiveSet.MasterTrack")
+        return AbletonTrack(master_track)
 
     def compile_xml(self):
         header = '<?xml version="1.0" encoding="UTF-8"?>\n'.encode("utf-8")
@@ -62,8 +85,6 @@ class AbletonSet:
 
 
 if __name__ == "__main__":
-    root = None
-
     path = "/Users/brentthayer/Desktop/set_creator Project/set_creator.als"
     path2 = "/Users/brentthayer/Desktop/set_creator Project/set_creatorTESTER.als"
 
@@ -73,8 +94,7 @@ if __name__ == "__main__":
 
     counter = 0
 
-    for track in ableton_set.tracks:
-        print(track.name)
+    for track in ableton_set.tracks["AudioTrack"]:
         track.set_name(f"TEST TRACK {counter}")
         counter += 1
 
