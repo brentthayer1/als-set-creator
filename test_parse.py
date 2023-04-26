@@ -1,5 +1,9 @@
 from xml.etree import ElementTree as ET
-from typing import Dict, Literal, Optional, Tuple, Union, overload
+
+import yaml
+from pathlib import Path
+
+
 
 # from ableton_track import AbletonTrack
 import gzip
@@ -7,78 +11,87 @@ import gzip
 from utils import *
 from ableton_track import *
 
-# root = et.fromstring(
-#     command_request
-# )  # fromString parses xml from string to an element, command request can be xml request string
-# root.find(
-#     "cat"
-# ).text = (
-#     "dog"  # find the element tag as cat and replace it with the string to be replaced.
-# )
-# et.tostring(root)
+
 
 
 class AbletonSet:
-    def __init__(self, xml_data):
-        self.root = ET.fromstring(xml_data)
-        self.tracks = self.get_tracks()
-        self.master_track = self.get_master_track()
+    def __init__(self, config):
+        self.config = config
+        self.returns = self.set_returns()
 
-    def get_track_type(self, track):
-        track_type = track.tag
-        if track_type == "MidiTrack":
-            return MidiTrack(track)
-        elif track_type == "AudioTrack":
-            return AudioTrack(track)
-        elif track_type == "GroupTrack":
-            return GroupTrack(track)
-        else:
-            return Track(track)
+    def set_returns(self):
+        return self.config["Returns"]
 
-    def get_tracks(self):
-        tracks = get_element(self.root, "LiveSet.Tracks")
-        track_list = []
-        for track in tracks:
-            track_type = self.get_track_type(track)
-            track_list.append(track_type)
 
-        track_dict = {}
-        for track in track_list:
-            if track.track_type not in track_dict:
-                track_dict[track.track_type] = [track]
-            else:
-                track_dict[track.track_type].append(track)
-
-        return track_dict
-
-    def get_master_track(self):
-        master_track = get_element(self.root, "LiveSet.MasterTrack")
-        return AbletonTrack(master_track)
-
-    def compile_xml(self):
-        header = '<?xml version="1.0" encoding="UTF-8"?>\n'.encode("utf-8")
-        footer = "\n".encode("utf-8")
-        body = ET.tostring(self.root, encoding="utf-8")
-        return header + body + footer
 
 
 if __name__ == "__main__":
-    path = "/Users/brentthayer/Desktop/set_creator Project/set_creator.als"
-    path2 = "/Users/brentthayer/Desktop/set_creator Project/set_creatorTESTER.als"
+    # config = yaml.safe_load(Path("set-up.yaml").read_text())
+    # ableton_set = AbletonSet(config)
 
-    xml_data = als_to_xml(path)
+    # print(ableton_set.config)
 
-    ableton_set = AbletonSet(xml_data)
+    import xml.etree.ElementTree as ET
+    import yaml
 
-    counter = 0
+    # Read the YAML file
+    with open("set-up.yaml", "r") as f:
+        data = yaml.safe_load(f)
+        print(data)
 
-    for track in ableton_set.tracks["AudioTrack"]:
-        track.set_name(f"TEST TRACK {counter}")
-        counter += 1
+    # Create a new XML element with the LiveSet root element
+    liveset = ET.Element("LiveSet")
 
-    xml_output = ableton_set.compile_xml()
+    # Add some child elements to the LiveSet element
+    creator = ET.SubElement(liveset, "Creator")
+    creator.text = "Your Name Here"
 
-    xml_to_als(xml_output, path2)
+    info = ET.SubElement(liveset, "Info")
+    info.set("Tempo", "120")
+    info.set("Signature", "4/4")
+
+    # Loop over the tracks and create a new GroupTrack element for each one
+    group_tracks = []
+    for track_data in data["Tracks"]:
+        group_track = ET.SubElement(liveset, "GroupTrack")
+        group_track.set("Name", track_data["Name"])
+        group_tracks.append(group_track)
+
+        # Loop over the elements and create a new AudioTrack element for each one
+        for element in track_data["Elements"]:
+            audio_track = ET.SubElement(liveset, "AudioTrack")
+            audio_track.set("Name", element[:-4])  # remove the .wav extension
+            audio_track.set("GroupTrackID", str(group_track.get("Id")))
+
+    # Write the XML data to a file
+    with open("new_set.xml", "wb") as f:
+        header = '<?xml version="1.0" encoding="UTF-8"?>\n'.encode("utf-8")
+        footer = "\n".encode("utf-8")
+        body = ET.tostring(liveset, encoding="utf-8")
+        new_xml = header + body + footer
+        f.write(new_xml)
+
+
+
+
+
+
+    # path = "/Users/brentthayer/Desktop/set_creator Project/set_creator.als"
+    # path2 = "/Users/brentthayer/Desktop/set_creator Project/set_creatorTESTER.als"
+
+    # xml_data = als_to_xml(path)
+
+    # ableton_set = AbletonSet(xml_data)
+
+    # counter = 0
+
+    # for track in ableton_set.tracks["AudioTrack"]:
+    #     track.set_name(f"TEST TRACK {counter}")
+    #     counter += 1
+
+    # xml_output = ableton_set.compile_xml()
+
+    # xml_to_als(xml_output, path2)
 
 
 # print(lst[0].type)

@@ -1,40 +1,41 @@
 import os
 import gzip
-from typing import Dict, Literal, Optional, Tuple, Union, overload
+# from typing import Dict, Literal, Optional, Tuple, Union, overload
+from typing import Optional
 from xml.etree import ElementTree as ET
 
 
-@overload
-def get_element(
-    root: ET.Element,
-    attribute_path: str,
-    *,
-    silent_error: Literal[False],
-    attribute: Literal[None] = None,
-):
-    ...
+# @overload
+# def get_element(
+#     root: ET.Element,
+#     attribute_path: str,
+#     *,
+#     silent_error: Literal[False],
+#     attribute: Literal[None] = None,
+# ):
+#     ...
 
 
-@overload
-def get_element(
-    root: ET.Element,
-    attribute_path: str,
-    *,
-    silent_error: Literal[True],
-    attribute: Literal[None] = None,
-):
-    ...
+# @overload
+# def get_element(
+#     root: ET.Element,
+#     attribute_path: str,
+#     *,
+#     silent_error: Literal[True],
+#     attribute: Literal[None] = None,
+# ):
+#     ...
 
 
-@overload
-def get_element(
-    root: ET.Element,
-    attribute_path: str,
-    *,
-    silent_error: Literal[False] = False,
-    attribute: str,
-):
-    ...
+# @overload
+# def get_element(
+#     root: ET.Element,
+#     attribute_path: str,
+#     *,
+#     silent_error: Literal[False] = False,
+#     attribute: str,
+# ):
+#     ...
 
 
 def get_element(

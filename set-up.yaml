@@ -1,15 +1,18 @@
 
-Sends:
-  - Bass
-  - Drums
+Returns:
+  - 1: Click
+  - 2: Bass
+  - 3: Loops
+  - 4: Guitars
+  - 5: FX
+
 Tracks:
   - Name: Song 1
-    Key: C
-    BPM: 120
-    TimeSignature: 4/4
-    Path: path/to/song/song1/
-    Routings:
-      Send: Bass
-      Tracks:
-      - bass.wav 
+    Elements:
+      - bass.wav
+      - loop1.wav
+
+  - Name: Song 2
+    Elements:
       - bass2.wav
+      - fx.wav

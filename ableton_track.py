@@ -48,3 +48,8 @@ class GroupTrack(Track):
     def __init__(self, track_root: ET.Element):
         super().__init__(track_root)
         self.track_type = "GroupTrack"
+
+class ReturnTrack(Track):
+    def __init__(self, track_root: ET.Element):
+        super().__init__(track_root)
+        self.track_type = "ReturnTrack"
