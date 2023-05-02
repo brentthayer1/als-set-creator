@@ -1,8 +1,9 @@
 import os.path
 import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import Element
-import xml
 from xml.dom import minidom
+
+import yaml
 
 
 import sys
@@ -10,8 +11,6 @@ import sys
 sys.path.append(f"{os.getcwd()}/src/components/")
 from AudioTrack.audio_track import AudioTrack
 
-
-# root = tree.getroot()
 
 TEMPLATE_PATH = f"{os.getcwd()}/src/components/LiveSet/LiveSet.xml"
 
@@ -40,16 +39,40 @@ class LiveSet:
     def ET_to_string(self):
         reparsed = minidom.parseString(ET.tostring(self.tree.getroot()).decode("utf8"))
         return reparsed.toprettyxml(indent="\t")
+
+# def parse_returns(returns):
+#     return_tracks = []
+#     for return_track in returns:
+#         return_tracks.append(AudioTrack(return_track["name"], return_track["id"], return_track["group_id"], return_track["sends"]))
+#     return return_tracks
+
+def parse_tracks(tracks):
+    audio_tracks = []
+    for track in tracks:
+        audio_track = AudioTrack(track["ame"], track["id"], track["group_id"], track["sends"])
+        name, id, group_id, sends
+    return audio_tracks
+
+def parse_config(config):
+    with open("set-up.yaml", "r") as f:
+        data = yaml.safe_load(f)
+
+    # returns = parse_returns(data["Returns"])
+    tracks = parse_tracks(data["Tracks"])
+
+    
     
 
 
 if __name__ == "__main__":
-    tracks = [
-        AudioTrack("test1", 1, 1, 1),
-        AudioTrack("test2", 2, 2, 1),
-    ]
-    live_set = LiveSet(tracks, None, None)
-    print(live_set.ET_to_string())
+    config = parse_config("set-up.yaml")
+
+    # tracks = [
+    #     AudioTrack("test1", 1, 1, 1),
+    #     AudioTrack("test2", 2, 2, 1),
+    # ]
+    # live_set = LiveSet(tracks, None, None)
+    # print(live_set.ET_to_string())
     
     # print(live_set)
 

@@ -16,13 +16,12 @@ class AudioTrack:
         self.set_id(id)
         self.set_name(name)
 
+    def set_id(self, id):
+        self.root.set("Id", str(id))
+
     def set_attribute(self, tag, attribute, value):
         child = self.root.find(tag)
         child.set(attribute, value)
-
-    def set_id(self, id):
-        self.root.set("Id", str(id))
-        # self.set_attribute("", "Id", id)
 
     def set_name(self, name):
         self.set_attribute("Name/EffectiveName", "Value", name)

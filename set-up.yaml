@@ -6,13 +6,24 @@ Returns:
   - 4: Guitars
   - 5: FX
 
-Tracks:
+Songs:
+  CuesPath: Dropbox/cues/
+  TracksPath: Dropbox/tracks/
+  
   - Name: Song 1
-    Elements:
-      - bass.wav
-      - loop1.wav
+    Cues: cues_song1.midi
+    Tracks:
+      Path: song1/
+      2:
+        - bass.wav
+      3:
+        - loop1.wav
 
   - Name: Song 2
-    Elements:
-      - bass2.wav
-      - fx.wav
+    Cues: cues_song2.midi
+    Tracks:
+      Path: song2/
+      2:
+        - bass22.wav
+      5:
+        - fx.wav
