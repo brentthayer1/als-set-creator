@@ -1,19 +1,19 @@
-<AudioTrack Id="640">
-    <LomId Value="0" />
+<AudioTrack Id="">
+    <!-- <LomId Value="0" />
     <LomIdView Value="0" />
     <IsContentSelectedInDocument Value="true" />
     <PreferredContentViewMode Value="0" />
     <TrackDelay>
         <Value Value="0" />
         <IsValueSampleBased Value="false" />
-    </TrackDelay>
+    </TrackDelay> -->
     <Name>
-        <EffectiveName Value="TEST TRACK 11" />
-        <UserName Value="TEST TRACK 11" />
+        <EffectiveName Value="" />
+        <UserName Value="" />
         <Annotation Value="" />
-        <MemorizedFirstClipName Value="  AG" />
+        <MemorizedFirstClipName Value="" />
     </Name>
-    <Color Value="28" />
+    <!-- <Color Value="28" />
     <AutomationEnvelopes>
         <Envelopes />
     </AutomationEnvelopes>
@@ -498,5 +498,5 @@
             <Devices />
             <SignalModulations />
         </DeviceChain>
-    </DeviceChain>
+    </DeviceChain> -->
 </AudioTrack>

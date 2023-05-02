@@ -13,12 +13,24 @@ class AudioTrack:
         self.template = os.path.abspath(TEMPLATE_PATH)
         self.tree = ET.parse(self.template)
         self.root = self.tree.getroot()
-        # print(self.root)
+        self.set_id(id)
+        self.set_name(name)
+
+    def set_attribute(self, tag, attribute, value):
+        child = self.root.find(tag)
+        child.set(attribute, value)
+
+    def set_id(self, id):
+        self.root.set("Id", str(id))
+        # self.set_attribute("", "Id", id)
+
+    def set_name(self, name):
+        self.set_attribute("Name/EffectiveName", "Value", name)
+        self.set_attribute("Name/UserName", "Value", name)
 
     def ET_to_string(self):
         return ET.tostring(self.tree.getroot()).decode("utf8")
 
 
 if __name__ == "__main__":
-    track = AudioTrack("test", 1, 1, 1)
-    # print(track.root)
+    pass
