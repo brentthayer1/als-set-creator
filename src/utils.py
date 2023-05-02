@@ -1,5 +1,6 @@
 import os
 import gzip
+
 # from typing import Dict, Literal, Optional, Tuple, Union, overload
 from typing import Optional
 from xml.etree import ElementTree as ET
@@ -90,8 +91,8 @@ def als_to_xml(als_file_path):
         return xml_data
 
 
-def xml_to_als(xml_data, xml_file_path):
-    new_als_path = os.path.splitext(xml_file_path)[0] + "TESTER.als"
+def xml_to_als(xml_data, path):
+    new_als_path = os.path.splitext(path)[0] + "TESTER.als"
     with gzip.open(new_als_path, "wb") as new_als_file:
         new_als_file.write(xml_data)
 
