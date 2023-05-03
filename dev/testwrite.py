@@ -32,3 +32,9 @@ with open(path, "rb") as als_file:
 
 with open("new_set.xml", "w") as f:
     f.write(xml_data)
+
+def compile_xml(self):
+    header = '<?xml version="1.0" encoding="UTF-8"?>\n'.encode("utf-8")
+    footer = "\n".encode("utf-8")
+    body = ET.tostring(self.root, encoding="utf-8")
+    return header + body + footer
