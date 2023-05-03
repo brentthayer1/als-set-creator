@@ -1,16 +1,13 @@
 import os.path
 import xml.etree.ElementTree as ET
 
-TEMPLATE_PATH = f"{os.getcwd()}/src/components/AudioTrack/AudioTrack.xml"
+TEMPLATE_PATH = f"{os.getcwd()}/src/components/GroupTrack/GroupTrack.xml"
 
 
-class AudioTrack:
-    def __init__(self, name, path, id, group_id, sends):
+class GroupTrack:
+    def __init__(self, name, id):
         self.name = name
-        self.path = path
         self.id = id
-        self.group_id = group_id
-        self.sends = sends
         self.template = os.path.abspath(TEMPLATE_PATH)
         self.tree = ET.parse(self.template)
         self.root = self.tree.getroot()
@@ -28,8 +25,8 @@ class AudioTrack:
         self.set_attribute("Name/EffectiveName", "Value", name)
         self.set_attribute("Name/UserName", "Value", name)
 
-    def ET_to_string(self):
-        return ET.tostring(self.tree.getroot()).decode("utf8")
+    # def ET_to_string(self):
+    #     return ET.tostring(self.tree.getroot()).decode("utf8")
 
 
 if __name__ == "__main__":

@@ -98,8 +98,4 @@ class YamlConfigParser:
 
 
 if __name__ == "__main__":
-    parser = YamlConfigParser()
-    config = parser.parse("set-up.yaml")
-    print(config.returns)
-
-    # print(config.songs.songs[0].tracks[0].path)
+    pass
