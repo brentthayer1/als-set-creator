@@ -1,5 +1,11 @@
 import os.path
 import xml.etree.ElementTree as ET
+import os
+import sys
+
+# sys.path.append(f"{os.getcwd()}/src/components/")
+
+# from AudioClip.audio_clip import AudioClip
 
 TEMPLATE_PATH = f"{os.getcwd()}/src/components/AudioTrack/AudioTrack.xml"
 
@@ -16,6 +22,8 @@ class AudioTrack:
         self.root = self.tree.getroot()
         self.set_id(id)
         self.set_name(name)
+        self.set_group_id(group_id)
+        self.set_path(path)
 
     def set_id(self, id):
         self.root.set("Id", str(id))
@@ -27,6 +35,14 @@ class AudioTrack:
     def set_name(self, name):
         self.set_attribute("Name/EffectiveName", "Value", name)
         self.set_attribute("Name/UserName", "Value", name)
+
+    def set_group_id(self, group_id):
+        self.set_attribute("TrackGroupId", "Value", str(group_id))
+    
+    def set_path(self, path):
+        self.set_attribute("DeviceChain/MainSequencer/Sample/ArrangerAutomation/Events/AudioClip/SampleRef/FileRef/RelativePath", "Value", path)
+        self.set_attribute("DeviceChain/MainSequencer/Sample/ArrangerAutomation/Events/AudioClip/SampleRef/FileRef/Path", "Value", path)
+        
 
     def ET_to_string(self):
         return ET.tostring(self.tree.getroot()).decode("utf8")

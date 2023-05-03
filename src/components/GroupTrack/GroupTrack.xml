@@ -16,9 +16,9 @@
     <!-- <Color Value="14" />
     <AutomationEnvelopes>
         <Envelopes />
-    </AutomationEnvelopes>
+    </AutomationEnvelopes> -->
     <TrackGroupId Value="-1" />
-    <TrackUnfolded Value="true" />
+    <!-- <TrackUnfolded Value="true" />
     <DevicesListWrapper LomId="0" />
     <ClipSlotsListWrapper LomId="0" />
     <ViewData Value="{}" />

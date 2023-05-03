@@ -11,6 +11,7 @@ sys.path.append(f"{os.getcwd()}/src/components/")
 from AudioTrack.audio_track import AudioTrack
 from ReturnTrack.return_track import ReturnTrack
 from GroupTrack.group_track import GroupTrack
+# from MidiTrack.midi_track import MidiTrack
 from LiveSet.live_set import LiveSet
 
 
@@ -23,7 +24,7 @@ def create_return_tracks(config):
     for return_track in config.returns:
         return_track = ReturnTrack(
             name=return_track.name,
-            id=return_track.id,
+            id=return_track.id*1000,
         )
         return_tracks.append(return_track)
     return return_tracks
@@ -31,7 +32,7 @@ def create_return_tracks(config):
 
 def create_group_tracks(config):
     group_tracks = []
-    for song in config.songs:
+    for song in config.songs.songs:
         group_track = GroupTrack(
             name=song.name,
             id=song.id,
@@ -49,35 +50,42 @@ def create_audio_and_midi_tracks(config):
     midi_tracks = []
 
     for song in songs:
+        
+        group_id = song.id
+        song_id = group_id + 1
+
+        # midi_tracks.append(MidiTrack())
+
         for track in song.tracks:
             audio_track = AudioTrack(
-                name=f"testname{song.id}",
-                path=song.path + track.path,
-                id=1,
-                group_id=song.id,
+                name=track.path.split(".")[0],
+                path=tracks_path + track.path,
+                id=song_id,
+                group_id=group_id,
                 sends=track.send,
             )
             audio_tracks.append(audio_track)
+            song_id += 1
+    return audio_tracks, midi_tracks
 
 
 def create_tracks(config):
-    tracks = {
-        "audio_tracks": [],
+    audio_midi_tracks = create_audio_and_midi_tracks(config)
+    return {
+        "audio_tracks": audio_midi_tracks[0],
+        "midi_tracks": audio_midi_tracks[1],
+        "return_tracks": create_return_tracks(config),
+        "group_tracks": create_group_tracks(config),
     }
 
 
 def main():
     parser = YamlConfigParser()
     config = parser.parse("set-up.yaml")
-    # return_tracks = create_return_tracks(config)
-    # group_tracks = create_group_tracks(config)
-    # print(return_tracks)
+    tracks = create_tracks(config)
 
-    create_audio_and_midi_tracks(config)
-    # print(config)
-
-    # live_set = LiveSet(tracks, None, None)
-    # print(live_set.ET_to_string())
+    live_set = LiveSet(tracks, None, None)
+    print(live_set.ET_to_string())
 
     # print(live_set)
 

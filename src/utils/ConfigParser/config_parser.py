@@ -63,7 +63,7 @@ class YamlConfigParser:
         for song_num, song_info in self.songs.items():
             tracks_list = self.set_tracks_list(song_info)
             song_config = SongConfigObject(
-                id=song_num,
+                id=song_num*100,
                 name=song_info["Name"],
                 path=song_info["Path"],
                 cues=song_info["Cues"],
