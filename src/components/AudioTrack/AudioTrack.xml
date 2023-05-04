@@ -1,24 +1,24 @@
 <AudioTrack Id="">
-    <!-- <LomId Value="0" />
+    <LomId Value="0" />
     <LomIdView Value="0" />
     <IsContentSelectedInDocument Value="true" />
     <PreferredContentViewMode Value="0" />
     <TrackDelay>
         <Value Value="0" />
         <IsValueSampleBased Value="false" />
-    </TrackDelay> -->
+    </TrackDelay>
     <Name>
         <EffectiveName Value="" />
         <UserName Value="" />
         <Annotation Value="" />
         <MemorizedFirstClipName Value="" />
     </Name>
-    <!-- <Color Value="28" />
+    <Color Value="28" />
     <AutomationEnvelopes>
         <Envelopes />
-    </AutomationEnvelopes> -->
+    </AutomationEnvelopes>
     <TrackGroupId Value="" />
-    <!-- <TrackUnfolded Value="true" />
+    <TrackUnfolded Value="true" />
     <DevicesListWrapper LomId="0" />
     <ClipSlotsListWrapper LomId="0" />
     <ViewData Value="{}" />
@@ -32,9 +32,9 @@
     <Freeze Value="false" />
     <VelocityDetail Value="0" />
     <NeedArrangerRefreeze Value="true" />
-    <PostProcessFreezeClips Value="0" /> -->
+    <PostProcessFreezeClips Value="0" />
     <DeviceChain>
-        <!-- <AutomationLanes>
+        <AutomationLanes>
             <AutomationLanes>
                 <AutomationLane Id="0">
                     <SelectedDevice Value="1" />
@@ -89,8 +89,8 @@
                 <FirstNoteChannel Value="1" />
                 <LastNoteChannel Value="15" />
             </MpeSettings>
-        </MidiOutputRouting> -->
-        <!-- <Mixer>
+        </MidiOutputRouting>
+        <Mixer>
             <LomId Value="0" />
             <LomIdView Value="0" />
             <IsExpanded Value="true" />
@@ -122,7 +122,7 @@
                 <Value />
             </SourceContext>
             <Sends>
-                <TrackSendHolder Id="4">
+                <!-- <TrackSendHolder Id="4">
                     <Send>
                         <LomId Value="0" />
                         <Manual Value="1" />
@@ -138,7 +138,7 @@
                         </ModulationTarget>
                     </Send>
                     <Active Value="true" />
-                </TrackSendHolder>
+                </TrackSendHolder> -->
             </Sends>
             <Speaker>
                 <LomId Value="0" />
@@ -218,9 +218,9 @@
                 </AutomationTarget>
             </CrossFadeState>
             <SendsListWrapper LomId="0" />
-        </Mixer> -->
+        </Mixer>
         <MainSequencer>
-            <!-- <LomId Value="0" />
+            <LomId Value="0" />
             <LomIdView Value="0" />
             <IsExpanded Value="true" />
             <On>
@@ -260,12 +260,12 @@
                     <NeedRefreeze Value="true" />
                 </ClipSlot>
             </ClipSlotList>
-            <MonitoringEnum Value="2" /> -->
+            <MonitoringEnum Value="2" />
             <Sample>
                 <ArrangerAutomation>
                     <Events>
                         <AudioClip Id="0" Time="0">
-                            <!-- <LomId Value="0" />
+                            <LomId Value="0" />
                             <LomIdView Value="0" />
                             <CurrentStart Value="0" />
                             <CurrentEnd Value="550.64937510406264" />
@@ -333,7 +333,7 @@
                             <FreezeStart Value="0" />
                             <FreezeEnd Value="0" />
                             <IsWarped Value="false" />
-                            <TakeId Value="1" /> -->
+                            <TakeId Value="1" />
                             <SampleRef>
                                 <FileRef>
                                     <RelativePathType Value="1" />
@@ -345,13 +345,13 @@
                                     <OriginalFileSize Value="95152256" />
                                     <OriginalCrc Value="43341" />
                                 </FileRef>
-                                <!-- <LastModDate Value="1659206330" />
+                                <LastModDate Value="1659206330" />
                                 <SourceContext />
                                 <SampleUsageHint Value="0" />
                                 <DefaultDuration Value="15858702" />
-                                <DefaultSampleRate Value="48000" /> -->
+                                <DefaultSampleRate Value="48000" />
                             </SampleRef>
-                            <!-- <Onsets>
+                            <Onsets>
                                 <UserOnsets />
                                 <HasUserOnsets Value="false" />
                             </Onsets>
@@ -390,7 +390,7 @@
                             </WarpMarkers>
                             <SavedWarpMarkersForStretched />
                             <MarkersGenerated Value="true" />
-                            <IsSongTempoMaster Value="false" /> -->
+                            <IsSongTempoMaster Value="false" />
                         </AudioClip>
                     </Events>
                     <AutomationTransformViewState>
@@ -399,7 +399,7 @@
                     </AutomationTransformViewState>
                 </ArrangerAutomation>
             </Sample>
-            <!-- <VolumeModulationTarget Id="170545">
+            <VolumeModulationTarget Id="170545">
                 <LockEnvelope Value="0" />
             </VolumeModulationTarget>
             <TranspositionModulationTarget Id="170546">
@@ -419,9 +419,9 @@
             <Recorder>
                 <IsArmed Value="false" />
                 <TakeCounter Value="1" />
-            </Recorder> -->
+            </Recorder>
         </MainSequencer>
-        <!-- <FreezeSequencer>
+        <FreezeSequencer>
             <LomId Value="0" />
             <LomIdView Value="0" />
             <IsExpanded Value="true" />
@@ -493,10 +493,10 @@
                 <IsArmed Value="false" />
                 <TakeCounter Value="1" />
             </Recorder>
-        </FreezeSequencer> -->
-        <!-- <DeviceChain>
+        </FreezeSequencer>
+        <DeviceChain>
             <Devices />
             <SignalModulations />
-        </DeviceChain> -->
+        </DeviceChain>
     </DeviceChain>
 </AudioTrack>

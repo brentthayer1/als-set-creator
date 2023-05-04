@@ -1,5 +1,6 @@
 import os
 import sys
+import gzip
 
 import os.path
 import xml.etree.ElementTree as ET
@@ -11,6 +12,7 @@ sys.path.append(f"{os.getcwd()}/src/components/")
 from AudioTrack.audio_track import AudioTrack
 from ReturnTrack.return_track import ReturnTrack
 from GroupTrack.group_track import GroupTrack
+
 # from MidiTrack.midi_track import MidiTrack
 from LiveSet.live_set import LiveSet
 
@@ -24,7 +26,7 @@ def create_return_tracks(config):
     for return_track in config.returns:
         return_track = ReturnTrack(
             name=return_track.name,
-            id=return_track.id*1000,
+            id=return_track.id * 1000,
         )
         return_tracks.append(return_track)
     return return_tracks
@@ -50,7 +52,6 @@ def create_audio_and_midi_tracks(config):
     midi_tracks = []
 
     for song in songs:
-        
         group_id = song.id
         song_id = group_id + 1
 
@@ -59,7 +60,7 @@ def create_audio_and_midi_tracks(config):
         for track in song.tracks:
             audio_track = AudioTrack(
                 name=track.path.split(".")[0],
-                path=tracks_path + track.path,
+                path=tracks_path + song.path + track.path,
                 id=song_id,
                 group_id=group_id,
                 sends=track.send,
@@ -73,10 +74,15 @@ def create_tracks(config):
     audio_midi_tracks = create_audio_and_midi_tracks(config)
     return {
         "audio_tracks": audio_midi_tracks[0],
-        "midi_tracks": audio_midi_tracks[1],
-        "return_tracks": create_return_tracks(config),
+        # "midi_tracks": audio_midi_tracks[1],
+        # "return_tracks": create_return_tracks(config),
         "group_tracks": create_group_tracks(config),
     }
+
+
+def xml_to_als(xml_data, write_path):
+    with gzip.open(write_path, "wb") as new_als_file:
+        new_als_file.write(xml_data)
 
 
 def main():
@@ -85,7 +91,12 @@ def main():
     tracks = create_tracks(config)
 
     live_set = LiveSet(tracks, None, None)
-    print(live_set.ET_to_string())
+
+    xml_data = live_set.compile_xml()
+
+    xml_to_als(xml_data, f"{config.name}.als")
+
+    # print(live_set.ET_to_string())
 
     # print(live_set)
 

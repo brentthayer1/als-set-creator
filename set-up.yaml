@@ -1,34 +1,17 @@
+Name: 05-03-2023
+
 Songs:
   CuesPath: Dropbox/cues/
-  TracksPath: Dropbox/tracks/
+  TracksPath: /Users/brentthayer/Desktop/als_test_tracks_directory/
   1:
-    Name: Song 1
+    Name: Test Song name !!
     Path: song1/
     Cues: cues_song1.midi
     Tracks:
-      bass1.wav: 2
-      loop1.wav: 3
-      perc1.wav: 5
-      guitar1.wav: 4
-  2:
-    Name: Song 2
-    Path: song2/
-    Cues: cues_song2.midi
-    Tracks:
-      bass2.wav: 2
-      loop2.wav: 3
-      perc2.wav: 5
-      guitar2.wav: 4
-  3:
-    Name: Song 3
-    Path: song3/
-    Cues: cues_song3.midi
-    Tracks:
-      bass2.wav: 2
-      loop3.wav: 3
-      perc3.wav: 5
-      guitar3.wav: 4
-  
+      Ac.wav: 2
+      Bass.wav: 2
+      EG2.wav: 2
+
 Returns:
   1: Click
   2: Bass

@@ -8,6 +8,7 @@ import sys
 # from AudioClip.audio_clip import AudioClip
 
 TEMPLATE_PATH = f"{os.getcwd()}/src/components/AudioTrack/AudioTrack.xml"
+# NOTE: The amount of return tracks need to also change the send tracks.
 
 
 class AudioTrack:
@@ -38,11 +39,18 @@ class AudioTrack:
 
     def set_group_id(self, group_id):
         self.set_attribute("TrackGroupId", "Value", str(group_id))
-    
+
     def set_path(self, path):
-        self.set_attribute("DeviceChain/MainSequencer/Sample/ArrangerAutomation/Events/AudioClip/SampleRef/FileRef/RelativePath", "Value", path)
-        self.set_attribute("DeviceChain/MainSequencer/Sample/ArrangerAutomation/Events/AudioClip/SampleRef/FileRef/Path", "Value", path)
-        
+        self.set_attribute(
+            "DeviceChain/MainSequencer/Sample/ArrangerAutomation/Events/AudioClip/SampleRef/FileRef/RelativePath",
+            "Value",
+            path,
+        )
+        self.set_attribute(
+            "DeviceChain/MainSequencer/Sample/ArrangerAutomation/Events/AudioClip/SampleRef/FileRef/Path",
+            "Value",
+            path,
+        )
 
     def ET_to_string(self):
         return ET.tostring(self.tree.getroot()).decode("utf8")

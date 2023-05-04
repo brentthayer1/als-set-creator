@@ -33,16 +33,25 @@ class LiveSet:
             tracks_element.append(track.tree.getroot())
         for track in tracks["audio_tracks"]:
             tracks_element.append(track.tree.getroot())
-        for track in tracks["midi_tracks"]:
-            tracks_element.append(track.tree.getroot())
-        for track in tracks["return_tracks"]:
-            tracks_element.append(track.tree.getroot())
+        # for track in tracks["midi_tracks"]:
+        #     tracks_element.append(track.tree.getroot())
+        # for track in tracks["return_tracks"]:
+        #     tracks_element.append(track.tree.getroot())
         tracks_tree = ET.ElementTree(tracks_element)
         self.root.append(tracks_tree.getroot())
 
     def ET_to_string(self):
         reparsed = minidom.parseString(ET.tostring(self.tree.getroot()).decode("utf8"))
         return reparsed.toprettyxml(indent="\t")
+
+    def compile_xml(self):
+        header = '<?xml version="1.0" encoding="UTF-8"?>\n<Ableton MajorVersion="5" MinorVersion="11.0_11202" SchemaChangeCount="17" Creator="Ableton Live 11.2.11" Revision="6e9e7c6913378fcbbe8b18e3fd8f33d0755968b8">'.encode(
+            "utf-8"
+        )
+        footer = "</Ableton>\n".encode("utf-8")
+        newline = "\n".encode("utf-8")
+        body = ET.tostring(self.root, encoding="utf-8")
+        return header + body + footer + newline
 
 
 if __name__ == "__main__":

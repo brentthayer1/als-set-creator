@@ -1,24 +1,24 @@
 <GroupTrack Id="">
-    <!-- <LomId Value="0" />
+    <LomId Value="0" />
     <LomIdView Value="0" />
     <IsContentSelectedInDocument Value="false" />
     <PreferredContentViewMode Value="0" />
     <TrackDelay>
         <Value Value="0" />
         <IsValueSampleBased Value="false" />
-    </TrackDelay> -->
+    </TrackDelay>
     <Name>
         <EffectiveName Value="1" />
         <UserName Value="1" />
         <Annotation Value="" />
         <MemorizedFirstClipName Value="" />
     </Name>
-    <!-- <Color Value="14" />
+    <Color Value="14" />
     <AutomationEnvelopes>
         <Envelopes />
-    </AutomationEnvelopes> -->
+    </AutomationEnvelopes>
     <TrackGroupId Value="-1" />
-    <!-- <TrackUnfolded Value="true" />
+    <TrackUnfolded Value="true" />
     <DevicesListWrapper LomId="0" />
     <ClipSlotsListWrapper LomId="0" />
     <ViewData Value="{}" />
@@ -121,7 +121,7 @@
                 <Value />
             </SourceContext>
             <Sends>
-                <TrackSendHolder Id="4">
+                <!-- <TrackSendHolder Id="4">
                     <Send>
                         <LomId Value="0" />
                         <Manual Value="0.0003162277571" />
@@ -137,7 +137,7 @@
                         </ModulationTarget>
                     </Send>
                     <Active Value="true" />
-                </TrackSendHolder>
+                </TrackSendHolder> -->
             </Sends>
             <Speaker>
                 <LomId Value="0" />
@@ -286,5 +286,5 @@
                 <TakeCounter Value="1" />
             </Recorder>
         </FreezeSequencer>
-    </DeviceChain> -->
+    </DeviceChain>
 </GroupTrack>

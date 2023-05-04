@@ -33,6 +33,7 @@ class ReturnConfigObject:
 
 @dataclass
 class ConfigObject:
+    name: str
     songs: SongsConfigObject
     returns: ReturnConfigObject
 
@@ -63,7 +64,7 @@ class YamlConfigParser:
         for song_num, song_info in self.songs.items():
             tracks_list = self.set_tracks_list(song_info)
             song_config = SongConfigObject(
-                id=song_num*100,
+                id=song_num * 100,
                 name=song_info["Name"],
                 path=song_info["Path"],
                 cues=song_info["Cues"],
@@ -85,7 +86,11 @@ class YamlConfigParser:
             self.return_list.append(return_config)
 
     def set_config(self):
-        self.config = ConfigObject(songs=self.songs_config, returns=self.return_list)
+        self.config = ConfigObject(
+            name=self.yaml_data["Name"],
+            songs=self.songs_config,
+            returns=self.return_list,
+        )
 
     def parse(self, yaml_config):
         self.load_yaml(yaml_config)
