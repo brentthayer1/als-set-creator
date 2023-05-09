@@ -1,0 +1,14 @@
+Name: Great Things
+Path: Great Things-Living Hope-G-102.00bpm/MultiTracks/
+Cues: cues_song1.midi
+Time Signature: 4/4
+Tempo:
+  Source: 102
+  Target: 102
+Key:
+  Source: G
+  Target: G
+Tracks:
+  AG.wav: 2
+  Bass.wav: 2
+  EG 2.wav: 2

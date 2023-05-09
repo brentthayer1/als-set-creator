@@ -1,0 +1,14 @@
+Name: Template Name
+Path: Path/To/MultiTracks/
+Cues: midi_cues.midi
+Time Signature: 4/4
+Tempo:
+  Source: 100
+  Target: 102
+Key:
+  Source: G
+  Target: A
+Tracks:
+  AG.wav: 1
+  Bass.wav: 1
+  EG 2.wav: 1

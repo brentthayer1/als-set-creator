@@ -87,24 +87,13 @@ def xml_to_als(xml_data, write_path):
 
 def main():
     parser = YamlConfigParser()
-    config = parser.parse("set-up.yaml")
+    config = parser.parse("/config/config.yaml")
     tracks = create_tracks(config)
 
     live_set = LiveSet(tracks, None, None)
 
-    xml_data = live_set.compile_xml()
+    print(live_set.ET_to_string())
 
-    xml_to_als(xml_data, f"{config.name}.als")
+    # xml_data = live_set.compile_xml()
 
-    # print(live_set.ET_to_string())
-
-    # print(live_set)
-
-    # print(live_set.tracks[0].ET_to_string())
-
-    # live_set.add_tracks(tracks)
-
-    # body = ET.tostring(live_set.root, encoding="utf-8")
-
-    # with open("tester_set.xml", "w") as f:
-    #     f.write(body)
+    # xml_to_als(xml_data, f"{config.name}.als")

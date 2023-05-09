@@ -1,0 +1,14 @@
+Name: Graves Into Gardens
+Path: Graves Into Gardens-Graves Into Gardens-B-70.00bpm/MultiTracks/
+Cues: cues_song1.midi
+Time Signature: 6/8
+Tempo:
+  Source: 70
+  Target: 70
+Key:
+  Source: B
+  Target: B
+Tracks:
+  AG.wav: 2
+  Bass.wav: 2
+  EG 2.wav: 2

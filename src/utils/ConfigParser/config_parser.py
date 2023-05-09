@@ -1,4 +1,6 @@
-from typing import List
+import os
+import sys
+from typing import Any, List
 import yaml
 from dataclasses import dataclass
 
@@ -42,18 +44,41 @@ class YamlConfigParser:
     def __init__(self):
         self.exclude_keys = ["CuesPath", "TracksPath"]
 
-    def load_yaml(self, yaml_config):
-        with open(yaml_config, "r") as f:
+    def load_yaml(self, yaml_config_path: str):
+        """Load yaml file from yaml_config_path
+
+        Args:
+            yaml_config (str): Path to yaml config file
+        """
+        with open(os.getcwd() + yaml_config_path, "r") as f:
             yaml_data = yaml.safe_load(f)
         self.yaml_data = yaml_data
 
+    def populate_songs(self):
+        """Load songs from yaml_data"""
+        for k in set(list(self.yaml_data["Songs"].keys())) - set(self.exclude_keys):
+            song = self.yaml_data["Songs"][k]
+
+            with open(os.getcwd() + "/config/songs/" + song, "r") as f:
+                yaml_data = yaml.safe_load(f)
+                self.yaml_data["Songs"][k] = yaml_data
+
     def parse_songs(self):
+        """Parse songs from yaml_data"""
         self.songs = {
             k: self.yaml_data["Songs"][k]
             for k in set(list(self.yaml_data["Songs"].keys())) - set(self.exclude_keys)
         }
 
-    def set_tracks_list(self, song_info):
+    def set_tracks_list(self, song_info: dict):
+        """Create list of TracksConfigObject from song_info
+
+        Args:
+            song_info (dict): Song info from yaml_data
+
+        Returns:
+            list: List of TracksConfigObject
+        """
         tracks_list = []
         for path, send in song_info["Tracks"].items():
             tracks_list.append(TracksConfigObject(path=path, send=send))
@@ -92,8 +117,9 @@ class YamlConfigParser:
             returns=self.return_list,
         )
 
-    def parse(self, yaml_config):
+    def parse(self, yaml_config: str):
         self.load_yaml(yaml_config)
+        self.populate_songs()
         self.parse_songs()
         self.set_songs_list()
         self.set_songs_config()
@@ -104,3 +130,15 @@ class YamlConfigParser:
 
 if __name__ == "__main__":
     pass
+    # sys.path.append(f"{os.getcwd()}/src/utils/")
+
+    # parser = YamlConfigParser()
+    # parser.load_yaml("/config/set-up.yaml")
+    # parser.populate_songs()
+
+    # parser.parse_songs()
+    # parser.set_songs_list()
+    # parser.set_songs_config()
+    # parser.set_returns_list()
+    # # parser.set_config()
+    # config = parser.parse("set-up.yaml")
